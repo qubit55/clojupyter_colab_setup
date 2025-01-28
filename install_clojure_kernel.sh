@@ -29,7 +29,7 @@ jar_file=$(find target -name "clojupyter-*-standalone.jar" | head -n 1)
 echo "Using JAR file: $jar_file"
 
 # Install the Clojupyter kernel using the jar file
-clojure -M -m clojupyter.cmdline install --jarfile "$jar_file" --ident "clojupyter-0.5.424"
+clojure -M -m clojupyter.cmdline install --jarfile "$jar_file" --ident "clojupyter"
 
 # Verify installations
 clojure -M -m clojupyter.cmdline list-installs
@@ -37,11 +37,11 @@ jupyter-kernelspec list
 
 # Install the TCP IPC reverse proxy
 wget -qO- https://gist.github.com/SpencerPark/e2732061ad19c1afa4a33a58cb8f18a9/archive/b6cff2bf09b6832344e576ea1e4731f0fb3df10c.tar.gz | tar xvz --strip-components=1
-python install_ipc_proxy_kernel.py --kernel="clojupyter-0.5.424" --implementation=ipc_proxy_kernel.py
+python install_ipc_proxy_kernel.py --kernel="clojupyter" --implementation=ipc_proxy_kernel.py
 
 # Rename the new kernel display name for clarity
 apt-get install -y jq
-kernel_json="/root/.local/share/jupyter/kernels/clojupyter-0.5.424/kernel.json"
+kernel_json="/root/.local/share/jupyter/kernels/clojupyter/kernel.json"
 jq '.display_name = "Clojure IPC"' "$kernel_json" > /tmp/kernel-modified.json && mv /tmp/kernel-modified.json "$kernel_json"
 
 # List and display the kernel directory for verification
