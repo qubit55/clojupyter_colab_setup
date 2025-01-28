@@ -40,8 +40,11 @@ env clojure -T:build uber
 jar_file=$(ls target | grep standalone.jar)
 kernel_version=$(echo "$jar_file" | sed -E 's/^clojupyter-(.*)-standalone\.jar$/\1/')
 
+# Adjust kernel directory name to exclude SNAPSHOT
+kernel_ident=$(echo "$kernel_version" | sed -E 's/-SNAPSHOT//')
+
 # Install the kernel
-clojure -M -m clojupyter.cmdline install --jarfile target/$jar_file --ident clojupyter-$kernel_version
+clojure -M -m clojupyter.cmdline install --jarfile target/$jar_file --ident clojupyter-$kernel_ident
 
 # Verify kernel installation
 clojure -M -m clojupyter.cmdline list-installs
@@ -50,14 +53,14 @@ jupyter-kernelspec list
 # Install the IPC reverse proxy
 cd ..
 wget -qO- https://gist.github.com/SpencerPark/e2732061ad19c1afa4a33a58cb8f18a9/archive/b6cff2bf09b6832344e576ea1e4731f0fb3df10c.tar.gz | tar xvz --strip-components=1
-python install_ipc_proxy_kernel.py --kernel="clojupyter-$kernel_version" --implementation=ipc_proxy_kernel.py
+python install_ipc_proxy_kernel.py --kernel="clojupyter-$kernel_ident" --implementation=ipc_proxy_kernel.py
 
 # Install jq for modifying kernel.json
 apt-get update && apt-get install -y jq
 
 # Modify the kernel display name
-kernel_json_path="/root/.local/share/jupyter/kernels/clojupyter-$kernel_version/kernel.json"
-kernel_display_name="Clojure $clojure_version"
+kernel_json_path="/root/.local/share/jupyter/kernels/clojupyter-$kernel_ident/kernel.json"
+kernel_display_name="Clojure IPC $clojure_version"
 jq --arg name "$kernel_display_name" '.display_name = $name' "$kernel_json_path" > /tmp/kernel-modified.json && mv /tmp/kernel-modified.json "$kernel_json_path"
 
 # List installed kernels
@@ -67,4 +70,3 @@ ls -al /root/.local/share/jupyter/kernels
 cat "$kernel_json_path"
 
 echo "Clojure Jupyter kernel installation is complete!"
-
