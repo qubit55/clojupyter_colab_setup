@@ -32,8 +32,15 @@ sudo ./linux-install.sh
 clojure_version=$(clojure -Sdescribe | grep '"version":' | sed -E 's/.*"version": "([^"]+)".*/\1/')
 
 # Clone and build Clojupyter
-git clone https://github.com/clojupyter/clojupyter.git
-cd clojupyter
+if [ -d "clojupyter" ]; then
+  echo "Directory 'clojupyter' already exists. Pulling latest changes."
+  cd clojupyter
+  git pull
+else
+  git clone https://github.com/clojupyter/clojupyter.git
+  cd clojupyter
+fi
+
 env clojure -T:build uber
 
 # Get the generated jar file and version
