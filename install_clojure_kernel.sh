@@ -33,13 +33,12 @@ clojure_version=$(clojure -Sdescribe | grep '"version":' | sed -E 's/.*"version"
 
 # Clone and build Clojupyter
 if [ -d "clojupyter" ]; then
-  echo "Directory 'clojupyter' already exists. Pulling latest changes."
-  cd clojupyter
-  git pull
-else
-  git clone https://github.com/clojupyter/clojupyter.git
-  cd clojupyter
+  echo "Directory 'clojupyter' already exists. Removing it to avoid conflicts."
+  rm -rf clojupyter
 fi
+
+git clone https://github.com/clojupyter/clojupyter.git
+cd clojupyter
 
 env clojure -T:build uber
 
