@@ -23,7 +23,7 @@ java -cp clojupyter-0.5.424-SNAPSHOT-standalone.jar clojupyter.cmdline list-inst
 
 # Install the TCP IPC reverse proxy
 wget -qO- https://gist.github.com/SpencerPark/e2732061ad19c1afa4a33a58cb8f18a9/archive/b6cff2bf09b6832344e576ea1e4731f0fb3df10c.tar.gz | tar xvz --strip-components=1
-python install_ipc_proxy_kernel.py --kernel="clojupyter" --implementation=ipc_proxy_kernel.py
+python install_ipc_proxy_kernel.py --kernel="clojupyter-0.5.424-snapshot424" --implementation=ipc_proxy_kernel.py
 
 # Rename the new kernel display name for clarity
 apt-get install -y jq
