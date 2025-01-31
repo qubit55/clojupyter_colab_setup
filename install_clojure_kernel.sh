@@ -27,7 +27,7 @@ python install_ipc_proxy_kernel.py --kernel="clojupyter-0.5.424-snapshot424" --i
 
 # Rename the new kernel display name for clarity
 apt-get install -y jq
-kernel_json="/root/.local/share/jupyter/kernels/clojupyter/kernel.json"
+kernel_json="/root/.local/share/jupyter/kernels/clojupyter-0.5.424-snapshot424/kernel.json"
 jq '.display_name = "Clojure IPC"' "$kernel_json" > /tmp/kernel-modified.json && mv /tmp/kernel-modified.json "$kernel_json"
 
 # List and display the kernel directory for verification
