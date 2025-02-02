@@ -1,4 +1,4 @@
-# Setting Up Clojupyter on Colab
+# Setting Up Clojupyter in Colab
 
 Follow these steps to install and use Clojupyter in a Google Colab notebook.
 
