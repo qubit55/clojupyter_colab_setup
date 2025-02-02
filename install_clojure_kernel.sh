@@ -8,15 +8,22 @@ pip install install-jdk
 
 # Set up and install JDK 23
 # Set up and install JDK 23
+# Install JDK 23
 jdk_version="23"
 python -c "import jdk; jdk.install('$jdk_version')"
-export JAVA_HOME="/root/.jdk/jdk-23.0.1+11"
-export PATH="$JAVA_HOME/bin:$PATH"  # Add JDK 23 to the front of PATH
 
-# Verify
+# Dynamically detect the installed JDK version
+JAVA_HOME=$(ls -d /root/.jdk/jdk-* | head -n 1)
+export JAVA_HOME
+export PATH="$JAVA_HOME/bin:$PATH"
+
+# Verify JAVA_HOME and Java version
 echo "JAVA_HOME is set to: $JAVA_HOME"
 java -version
 
+# Create a symlink
+sudo ln -sf "$JAVA_HOME/bin/java" /usr/bin/java
+sudo ln -sf "$JAVA_HOME/bin/javac" /usr/bin/javac
 
 curl -L -O https://github.com/clojupyter/clojupyter/releases/download/v0.5.424-SNAPSHOT/clojupyter-0.5.424-SNAPSHOT-standalone.jar
 java -cp clojupyter-0.5.424-SNAPSHOT-standalone.jar clojupyter.cmdline install
