@@ -7,9 +7,13 @@ set -e
 pip install install-jdk
 
 # Set up and install JDK 23
+# Set up and install JDK 23
 jdk_version="23"
 python -c "import jdk; jdk.install('$jdk_version')"
 export JAVA_HOME="/root/.jdk/jdk-23.0.1+11"
+export PATH="$JAVA_HOME/bin:$PATH"  # Add JDK 23 to the front of PATH
+
+# Verify
 echo "JAVA_HOME is set to: $JAVA_HOME"
 java -version
 
