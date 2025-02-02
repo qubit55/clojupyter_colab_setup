@@ -6,10 +6,8 @@ set -e
 # Install JDK
 pip install install-jdk
 
-# Set up and install JDK 23
-# Set up and install JDK 23
-# Install JDK 23
-jdk_version="23"
+# Install JDK 
+jdk_version="21"
 python -c "import jdk; jdk.install('$jdk_version')"
 
 # Dynamically detect the installed JDK version
