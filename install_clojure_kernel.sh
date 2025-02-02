@@ -19,11 +19,13 @@ export PATH="$JAVA_HOME/bin:$PATH"
 
 # Verify JAVA_HOME and Java version
 echo "JAVA_HOME is set to: $JAVA_HOME"
-java -version
 
 # Create a symlink
 sudo ln -sf "$JAVA_HOME/bin/java" /usr/bin/java
 sudo ln -sf "$JAVA_HOME/bin/javac" /usr/bin/javac
+
+# Verify java version
+java -version
 
 curl -L -O https://github.com/clojupyter/clojupyter/releases/download/v0.5.424-SNAPSHOT/clojupyter-0.5.424-SNAPSHOT-standalone.jar
 java -cp clojupyter-0.5.424-SNAPSHOT-standalone.jar clojupyter.cmdline install
